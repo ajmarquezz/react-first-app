@@ -110,7 +110,7 @@ class App extends Component {
                     <th>Name</th>
                     <th>Address</th>
                     <th>Age</th>
-                    <th>Company</th>
+                    <th>Companyg</th>
                   </tr>
                 </thead>
                 <tbody>
