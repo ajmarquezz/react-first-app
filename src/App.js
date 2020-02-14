@@ -4,12 +4,12 @@ import React, { Component } from 'react';
 import { Navbar, Nav, NavDropdown, Form, FormControl, Button, Table } from 'react-bootstrap';
 import Select from 'react-select';
 
-const options = [
-  { value: 'chocolate', label: 'Chocolate' },
-  { value: 'strawberry', label: 'Strawberry' },
-  { value: 'vanilla', label: 'Vanilla' },
-  { value: 'cheese', label: 'Cheese' }
-];
+// const options = [
+//   { value: 'chocolate', label: 'Chocolate' },
+//   { value: 'strawberry', label: 'Strawberry' },
+//   { value: 'vanilla', label: 'Vanilla' },
+//   { value: 'cheese', label: 'Cheese' }
+// ];
 
 class App extends Component {
 
@@ -19,6 +19,7 @@ class App extends Component {
       // date: new Date()
       user_name: 'Alfonso',
       title: 'Software Engineer',
+      selectedOption: '',
       jsonList: []
     });
   }
@@ -44,9 +45,9 @@ class App extends Component {
     })
   }
 
-  state = {
-    selectedOption: null
-  }
+  // state = {
+  //   selectedOption: null
+  // }
   handleChange = selectedOption => {
     this.setState(
       { selectedOption },
@@ -56,7 +57,9 @@ class App extends Component {
 
   render() {
 
-    const { selectedOption } = this.state;
+    const selectList = this.state.jsonList.map(item => {
+      return { value : item.name, label : item.name }
+    });
     //array for each
     // const arrayToRender = [];
     // array.forEach(function(word) {
@@ -96,13 +99,18 @@ class App extends Component {
             <div className="col-sm-12">
               <h1>Lorem Ipsum</h1>
               <p> see i am a lot of things but i can assure you im not what it is they say i am | not lace not potpourri nobody like meee~</p>
-              <Select
-                isMulti
-                value={selectedOption}
-                onChange={this.handleChange}
-                options={options}
-                placeholder='Select Flavor(s)'
-              />
+
+              <div className="row">
+                <div className="col-sm-3">
+
+                  <Select
+                    value={this.state.selectedOption.value}
+                    onChange={this.handleChange.bind(this)}
+                    options={selectList}
+                  // placeholder='Select Flavor(s)'
+                  />
+                </div>
+              </div>     
               <hr />
               <Table striped bordered hover>
                 <thead>
@@ -110,20 +118,22 @@ class App extends Component {
                     <th>Name</th>
                     <th>Address</th>
                     <th>Age</th>
-                    <th>Companyg</th>
+                    <th>Company</th>
                   </tr>
                 </thead>
                 <tbody>
                     {this.state.jsonList.map(item => {
-                       return (
+                      console.log(this.state.selectedOption)
+                      if(this.state.selectedOption=== ''||item.name===this.state.selectedOption.value) { 
+                        return (
                       <tr key='item'>
                          <td>{item.name}</td>
                          <td>{item.address}</td>
                          <td>{item.age}</td>
                          <td>{item.company}</td>
-
                       </tr>  
                        )
+                      }
                      })}
                 </tbody>
               </Table>
